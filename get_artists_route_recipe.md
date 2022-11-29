@@ -84,12 +84,15 @@ describe Application do
       # expect(response.body).to eq(expected_response)
     end
 
-  context 'POST /artists/ do
-    it '' do
-      response = get('/posts?id=276278')
+  context 'POST /artists/' do
+    it 'adds a new artist' do
+      response = post('/artists', name:'Led Zeppelin', genre:'Rock')
 
-      expect(response.status).to eq(404)
-      # expect(response.body).to eq(expected_response)
+      expect(response.status).to eq(200)
+      expect(response.body).to eq('New artist added')
+
+      check = get('/artists')
+      expect(check).to include('Led Zeppelin')
     end
   end
 end
