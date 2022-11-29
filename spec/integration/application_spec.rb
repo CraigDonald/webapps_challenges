@@ -44,10 +44,13 @@ describe Application do
 
   context 'POST /artists/' do
     it 'adds a new artist' do
-      response = post('/artists')
+      response = post('/artists', name: 'Megadeth', 
+      genre:'Rock')
 
       expect(response.status).to eq(200)
-      expect(response.body).to eq('New artist added')
+      expect(response.body).to eq(('New artist added'))
+      check = get('/artists')
+      expect(check.body).to include('Megadeth')
     end
   end
 end
