@@ -13,10 +13,10 @@ describe Application do
   context 'GET /albums' do
     it 'should return a list of albums' do
       response = get('/albums')
-      expected_response = 'Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring'
-
+      
       expect(response.status).to eq(200)
-      expect(response.body).to eq(expected_response)
+      expect(response.body).to include('Surfer Rosa')
+      #expect(response.body).to include('<div>')
     end
   end
 
@@ -51,6 +51,15 @@ describe Application do
       expect(response.body).to eq(('New artist added'))
       check = get('/artists')
       expect(check.body).to include('Megadeth')
+    end
+  end
+
+  context "GET /albums/find" do
+    it 'returns 200 OK and one albums' do
+      response = get('/albums/2')
+      expect(response.status).to eq(200)
+      expect(response.body).to include('Surfer Rosa')
+      expect(response.body).to include('Pixies')
     end
   end
 end
