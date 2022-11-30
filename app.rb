@@ -28,17 +28,52 @@ class Application < Sinatra::Base
   #   # album from the database.
   # end
 
+  get '/' do
+    return erb(:index)
+  end
+
+  get '/about' do
+    return erb(:about)
+  end
+
   get '/albums' do
     repo = AlbumRepository.new
     album1 = repo.find(1)
     album2 = repo.find(2)
+    album3 = repo.find(3)
+    album4 = repo.find(4)
+    album5 = repo.find(5)
+    album6 = repo.find(6)
+    
 
     @title1 = album1.title
     @year1 = album1.release_year
     @title2 = album2.title
     @year2 = album2.release_year
+    @title3 = album3.title
+    @year3 = album3.release_year
+    @title4 = album4.title
+    @year4 = album4.release_year
+    @title5 = album5.title
+    @year5 = album5.release_year
+    @title6 = album6.title
+    @year6 = album6.release_year
     return erb(:albums)
 
+    # Use album_id to retrieve the corresponding
+    # album from the database.
+  end
+
+  get '/albums2' do
+    repo = AlbumRepository.new
+    all_albums = repo.all
+
+    all_albums.each do |album|
+      @title = album.title
+      @release_year = album.release_year
+      return erb(:albums2)
+    end
+    
     # Use album_id to retrieve the corresponding
     # album from the database.
   end
