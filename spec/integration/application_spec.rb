@@ -13,10 +13,25 @@ describe Application do
   context 'GET /albums' do
     it 'should return a list of albums' do
       response = get('/albums')
+
+      # <a href="/albums/2">Surfer Rosa</a>
+      # <a href="/albums/3">Waterloo</a>
+      # <a href="/albums/4">Super Trouper</a>
       
       expect(response.status).to eq(200)
-      expect(response.body).to include('Surfer Rosa')
+      expect(response.body).to include('<a href="/albums/2">Surfer Rosa</a><br />')
+      expect(response.body).to include('<a href="/albums/3">Waterloo</a><br />')
+      expect(response.body).to include('<a href="/albums/4">Super Trouper</a><br />')
       #expect(response.body).to include('<div>')
+    end
+  end
+
+  context "GET /albums/find" do
+    it 'returns 200 OK and one albums' do
+      response = get('/albums/2')
+      expect(response.status).to eq(200)
+      expect(response.body).to include('Surfer Rosa')
+      expect(response.body).to include('Pixies')
     end
   end
 
@@ -35,10 +50,10 @@ describe Application do
   context "GET /artists" do
     it 'returns 200 OK and list of artists' do
       response = get('/artists')
-      expected_return = 'Pixies, ABBA, Taylor Swift, Nina Simone, Kiasmos'
-
       expect(response.status).to eq(200)
-      expect(response.body).to eq(expected_return)
+      expect(response.body).to include('<a href="/artists/2">ABBA</a><br />')
+      expect(response.body).to include('<a href="/artists/3">Taylor Swift</a><br />')
+      expect(response.body).to include('<a href="/artists/4">Nina Simone</a><br />')
     end
   end
 
@@ -54,12 +69,12 @@ describe Application do
     end
   end
 
-  context "GET /albums/find" do
-    it 'returns 200 OK and one albums' do
-      response = get('/albums/2')
+  context "GET /artists/find" do
+    it 'returns 200 OK and one artist' do
+      response = get('/artists/2')
       expect(response.status).to eq(200)
-      expect(response.body).to include('Surfer Rosa')
-      expect(response.body).to include('Pixies')
+      expect(response.body).to include('ABBA')
+      expect(response.body).to include('Pop')
     end
   end
 end
